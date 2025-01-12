@@ -7,7 +7,6 @@ import openai
 import re
 import json
 import os
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 def fecha_a_letras(fecha_str):
     try:
@@ -30,6 +29,7 @@ def reemplazar_tildes(texto):
         texto = texto.replace(acentuado, sin_acento)
     return texto
 def crearVector(cursos,index):
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
     openai.api_key = OPENAI_API_KEY
     for curso in cursos:
         try:
@@ -75,6 +75,7 @@ def eliminarVector(arrEliminar,index):
     index.delete(ids=arrEliminar, namespace=namespace)
     print("Fin eliminar")
 def actualizarVector(cursos,index):
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
     codigos=[]
     namespace = "cursos"
     for codigo in cursos:
@@ -86,6 +87,7 @@ def actualizarVector(cursos,index):
         model="text-embedding-3-large"
     )
 def RobotEspecialistaLimpiar(mensaje):
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
     client = openai.OpenAI(api_key=OPENAI_API_KEY)
     chat_completion = client.chat.completions.create(
         messages=[
@@ -109,6 +111,7 @@ def RobotEspecialistaLimpiar(mensaje):
     return chat_completion.choices[0].message.content
 
 def RobotEspecialistaCompletar(infoLimpia,completar):
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
     client = openai.OpenAI(api_key=OPENAI_API_KEY)
     chat_completion = client.chat.completions.create(
         messages=[

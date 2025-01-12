@@ -9,7 +9,6 @@ from ActualizarIndexTodosCursos import actualizarIndexTodosCursos,actualizarInde
 from scrapingPrincipal import scrapingPrincipal
 import requests
 import os
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 def obtenerIndexDetalleCursos():
     api_key = "78e19e89-ca6f-4057-bc03-0c0ff6330e61"
@@ -49,6 +48,7 @@ def chunk_string(text, chunk_size=1000, buffer_size=100):
     return final_chunks
 
 def crearVectores(informacionDelCurso):
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
     chunks = chunk_string(informacionDelCurso)
     documents = [Document(page_content=chunk) for chunk in chunks]
     embedding = OpenAIEmbeddings(
