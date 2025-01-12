@@ -9,6 +9,8 @@ from ActualizarIndexTodosCursos import actualizarIndexTodosCursos,actualizarInde
 from scrapingPrincipal import scrapingPrincipal
 import requests
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 def obtenerIndexDetalleCursos():
     api_key = "78e19e89-ca6f-4057-bc03-0c0ff6330e61"
