@@ -75,29 +75,32 @@ def crearVectores(informacionDelCurso):
     return vectors
 
 #===============================================================================
-ActualizarCursosScrapeados()
-hijos=ObtenerCursosScrapeados()
-todos_cursos=[]
-contador=0
-index=obtenerIndexTodosCursos()
-for hijo in hijos:
-    link=hijo["Link"]
-    if link != 'No link found':
-        print(link)
-        try:
-            response = requests.get(link)
-            if response.status_code == 404:
-                print(f"Error 404: El link {link} no existe.")
-                continue
-        except requests.exceptions.RequestException as e:
-            print(f"Error al acceder al link {link}: {e}")
-        cursos=scrapingPrincipal(hijo["Titulo"],link)
-        if(cursos):
-            todos_cursos.extend(cursos)
-            contador+=1
-    if(contador==200):
-        break
-arrCrear,arrActualizar,arrEliminar=obtenerArreglosParaActualizarPinecone(todos_cursos)
+try:
+    ActualizarCursosScrapeados()
+    hijos=ObtenerCursosScrapeados()
+    todos_cursos=[]
+    contador=0
+    index=obtenerIndexTodosCursos()
+    for hijo in hijos:
+        link=hijo["Link"]
+        if link != 'No link found':
+            print(link)
+            try:
+                response = requests.get(link)
+                if response.status_code == 404:
+                    print(f"Error 404: El link {link} no existe.")
+                    continue
+            except requests.exceptions.RequestException as e:
+                print(f"Error al acceder al link {link}: {e}")
+            cursos=scrapingPrincipal(hijo["Titulo"],link)
+            if(cursos):
+                todos_cursos.extend(cursos)
+                contador+=1
+        if(contador==200):
+            break
+    arrCrear,arrActualizar,arrEliminar=obtenerArreglosParaActualizarPinecone(todos_cursos)
 
-print(len(arrCrear),len(arrActualizar),len(arrEliminar))
-arrCrear,arrActualizar,arrEliminar=actualizarIndexTodosCursos(arrCrear,arrActualizar,arrEliminar,index)
+    print(len(arrCrear),len(arrActualizar),len(arrEliminar))
+    arrCrear,arrActualizar,arrEliminar=actualizarIndexTodosCursos(arrCrear,arrActualizar,arrEliminar,index)
+except Exception as e:
+    print(e)
